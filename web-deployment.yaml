@@ -3,14 +3,11 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2025-02-19T18:03:11Z"
   generation: 3
   labels:
     app: synergychat-web
   name: synergychat-web
   namespace: default
-  resourceVersion: "2656"
-  uid: 78d613a0-999e-4dcb-8eb6-9e9f24cc984f
 spec:
   progressDeadlineSeconds: 600
   replicas: 3
@@ -36,6 +33,17 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        env: 
+          - name: WEB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: synergychat-web-configmap
+                key: WEB_PORT
+          - name: API_URL
+            valueFrom:
+              configMapKeyRef:
+                name: synergychat-web-configmap
+                key: API_URL
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
